@@ -1,3 +1,6 @@
+import string
+
+
 STOP_WORDS = [
     'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'has',
     'he', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
@@ -15,28 +18,41 @@ class FileReader:
         and return them as one string.
         """
         with open(self.filename) as poem:
-            text = poem.read().lower()
-            return poem
+            text = poem.read()
+        return text 
 
 
 class WordList:
     def __init__(self, text):
-        pass
+        self.text = text
 
     def extract_words(self):
+    
         """
         This should get all words from the text. This method
         is responsible for lowercasing all words and stripping
         them of punctuation.
         """
-        raise NotImplementedError("WordList.extract_words")
-
+        new_words = self.text.split().lower()
+        no_punctuation_list = []
+        for word in new_words:
+            newlist = word.translate(str.maketrans("", "", string.punctuation))
+            no_punctuation_list.append(newlist)
+        return no_punctuation_list
+        
+        
     def remove_stop_words(self):
+
         """
         Removes all stop words from our word list. Expected to
         be run after extract_words.
         """
-        raise NotImplementedError("WordList.remove_stop_words")
+        stop_removed = []
+        for words in self.no_punctuation_list:
+            if words not in STOP_WORDS:
+                stop_removed.append(words)
+        return stop_removed
+
 
     def get_freqs(self):
         """
@@ -45,12 +61,14 @@ class WordList:
         extract_words and remove_stop_words. The data structure
         could be a dictionary or another type of object.
         """
-        raise NotImplementedError("WordList.get_freqs")
-
+        for words in self.stop_removed:
+            num_of_words = stop_removed.count(words)
+        return num_of_words
 
 class FreqPrinter:
     def __init__(self, freqs):
-        pass
+        self.freqs = freqs
+        
 
     def print_freqs(self):
         """
@@ -69,7 +87,9 @@ class FreqPrinter:
        rights | 6    ******
         right | 6    ******
         """
-        raise NotImplementedError("FreqPrinter.print_freqs")
+        for i in self.freqs:
+            star = 
+
 
 
 if __name__ == "__main__":
@@ -93,3 +113,4 @@ if __name__ == "__main__":
     else:
         print(f"{file} does not exist!")
         sys.exit(1)
+
